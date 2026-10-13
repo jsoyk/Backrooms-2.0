@@ -1,0 +1,66 @@
+
+/*this can help make sure things go full width*/
+html, body {
+    width:100%;
+}
+
+/*the walking person*/
+#walkingPerson {
+    position:fixed;/*fixed in relation to the browser window - this is unaffected by the scroll*/
+    top:50%;/*these get it close to centered*/
+    left:50%;
+    transform:translate(-50%,-50%);/*this offset gets the character perfectly centered*/
+    z-index:1;/*arranged towards the front compared to other elements which default to "0" z-index - higher number means closer to the front, or on top*/
+    width:75px;
+    height:auto;/*maintains the image's porportions, based on the width amount I chose*/
+}
+
+#outside {
+    /*defaults to position:static without us having to say - the natural position of this element is good as is*/
+    /*It also has no children being positioned within it, so position:static is fine*/
+    height:100vh;/*the height is based on the height of the viewport - viewable area of the window*/
+    width:100vw;/*the width is based on the width of the viewport - viewable area of the window*/
+    background-image: url("../images/grass-3.jpg");/*the grass pattern*/
+    background-size: 20% auto;/*this controls the width and height of the grass tile - try changing it and see what happens*/
+    background-repeat: repeat;/*this repeats the grass tile in both the x and y directions*/
+}
+
+#clubWall {
+    /*this would default to position:static which would be fine if it didn't have positioned children, but since I'm positioning its children in relation to it, I need to give it a position type other than static*/
+    /*So I give it position:relative, but I don't use it for offset positioning, but rather just so I can position its children in relation to it*/
+    position:relative;
+    height:10px;/*this is a fixed size, so it won't change no matter what the device or browser window size*/
+    width:100%;/*percent also works here, cause its parent is the <body> which goes full width, so 100% of the body goes full width*/
+    background-color: #999;/*grey*/
+}
+
+#frontDoor {
+    position:absolute;/*I need to position this in the center of the wall parent*/
+    left:50%;
+    transform:translateX(-50%);/*this offset gets the door perfectly centered horizontally*/
+    height:100%;/*this is 100% of its parent!! Since the parent (the wall) is 10px high, this at 100% also becomes 10px*/
+    width:100px;/*a fixed width that will accommodate my walking character*/
+    background-color:#000;/*black*/
+}
+
+#theClub {
+    /*again, this would default to position:static which would be fine, but since I'm positioning its children in relation to it, I need to give it a position type other than static*/
+    /*So I give it position:relative, but I don't use it for offset positioning, but rather just so I can position its children in relation to it*/
+    /*try deactivating this position type and see what happnes to the children elements - the dancers and bar*/
+    position:relative;
+    height:200vh;/*the height is based on the height of the viewport - viewable area of the window*/
+    width:100%;/*percent also works here, cause its parent is the <body> which goes full width, so 100% of the body goes full width*/
+}
+
+/*I wanted to remove this from the natural flow inside its parent (the club) and put where I want*/
+#theBar {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);/*this offset gets the bar perfectly centered vertically*/
+    left:0;/*goes against the left edge*/
+}
+
+
+
+
+

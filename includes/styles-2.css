@@ -1,0 +1,48 @@
+html, body {
+    width:100%;
+    overflow-x:hidden;
+}
+
+#walking-person {
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:1;
+    width:75px;
+    height:auto;
+}
+
+#room-1 {
+    position: relative;
+    height:100vh;
+    width:100vw;
+    background-image: url("../images/kitchen-tile.jpg");
+    background-size: 2% auto;
+    background-repeat: repeat;
+}
+
+#room-wall {
+    position:relative;
+    height:50px;
+    width:100%;
+    background-color: #999;
+}  
+
+#front-door {
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    height:100%;
+    width:150px;
+    background-color:#000;
+}
+
+#room-2 {
+    position: relative;
+    height:200vh;
+    width:100vw;
+    background-image: url("../images/floor.jpg");
+    background-size: 20% auto;
+    background-repeat: repeat;
+}

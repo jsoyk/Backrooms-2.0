@@ -1,0 +1,591 @@
+
+/*this can help make sure things go full width*/
+html, body {
+    width:100%;
+    overflow-x: hidden;
+
+body {
+    /*overflow:hidden;*/
+    background-color: black;
+}
+
+#loadScreen {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100vh;
+    width:100vw;
+    background-color:#000;
+    z-index:998;
+    overflow-y:hidden;
+}
+
+#preloadOverlay {
+    position:fixed;
+    z-index:998;/*z-index 99,999*/
+    top: 50%;
+    left: 50%;
+    width: 20%;
+    height: 1px;
+    transform: translate(-50%,-50%);
+    opacity: 1;
+    transition: opacity 1s;
+    overflow-y:hidden;
+}
+
+#preloadProgstat {
+    font-family: freight-sans-pro, sans-serif;
+    font-weight: 300;
+    font-size:1em;
+    font-size:1rem;
+    position:absolute;
+    top:-30px;
+    margin-top:-40px;
+    width:100%;
+    text-align:center;
+    color:#fff;
+    opacity:1;
+}
+
+#enterBtn {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding:1rem;
+    color: #fff;
+    outline: 1px solid #fff;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size:1.25rem;
+    z-index: 999;
+}
+
+#theEndParent {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding:1rem;
+    color: #fff;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size:1.25rem;
+    z-index: 999;
+    display:none;
+}
+
+#theEndParent div {
+    position: relative;
+    text-align: center;
+}
+
+#theEnd {
+    font-size: 3rem;
+}
+
+#locationName {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    padding:1rem;
+    color: #fff;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size:3rem;
+    z-index: 998;
+    opacity:0;
+    pointer-events:none;
+    /* padding:1rem;
+    background-color: rgba(0,0,0,.75); */
+}
+
+#enterBtn:hover {
+    background-color: #fff;
+    color:#000;
+}
+
+#titleImageOverlay {
+    position: absolute;
+    top:0;
+    left:0;
+    height:100vh;
+    width:100vw;
+    /* background-color:dodgerblue;
+    mix-blend-mode:difference; */
+    /* background-color:aquamarine;
+    mix-blend-mode:overlay; */
+    z-index:997;
+}
+
+#titleImage {
+    position: absolute;
+    height:100vh;
+    width:100vw;
+    background-image: url("../images/pxArt.jpg");
+    background-size: cover;
+    z-index:996;
+}
+
+#mainWrapper {
+    display:none;
+    width:100%;
+    top:0;
+}
+
+#figure {
+    position:fixed;/*fixed in relation to the browser window - this is unaffected by the scroll*/
+    top:40%;/*these get it close to centered*/
+    left:50%;
+    display: inline-block;
+    transform:translate(-50%,-50%);/*this offset gets the character perfectly centered*/
+    z-index:1;/*arranged towards the front compared to other elements which default to "0" z-index - higher number means closer to the front, or on top*/
+}
+
+.figureItems {
+    top:0;/*these get it close to centered*/
+    left:0;
+    width:70px;
+    height:auto;/*maintains the image's porportions, based on the width amount I chose*/
+    display: block;
+}
+
+#standingPerson {
+    position:relative;/*fixed in relation to the browser window - this is unaffected by the scroll*/
+    z-index:1;/*arranged towards the front compared to other elements which default to "0" z-index - higher number means closer to the front, or on top*/
+    opacity:1;
+}
+
+#walkingPerson { 
+    position:absolute;/*fixed in relation to the browser window - this is unaffected by the scroll*/
+    z-index:2;/*arranged towards the front compared to other elements which default to "0" z-index - higher number means closer to the front, or on top*/
+    opacity:0;
+}
+
+#apron {
+    position:absolute;/*fixed in relation to the browser window - this is unaffected by the scroll*/
+    z-index:3;
+    opacity:0;
+}
+
+#outside {
+    /*defaults to position:static without us having to say - the natural position of this element is good as is*/
+    /*It also has no children being positioned within it, so position:static is fine*/
+    position: relative;
+    height:200vh;/*the height is based on the height of the viewport - viewable area of the window*/
+    width:100%;/*the width is based on the width of the viewport - viewable area of the window*/
+    background-image: url("../images/asphalt.jpg");/*the grass pattern*/
+    background-size: 20% auto;/*this controls the width and height of the grass tile - try changing it and see what happens*/
+    background-repeat: repeat;/*this repeats the grass tile in both the x and y directions*/
+}
+
+#sidewalk {
+    position:absolute;
+    bottom: 0;
+    width:100%;
+    height:100px;
+    background-image: url("../images/sidewalk-2.jpg");/*the grass pattern*/
+    background-size: 20% auto;/*this controls the width and height of the grass tile - try changing it and see what happens*/
+    background-repeat: repeat-x;
+}
+
+.wall {
+    /*this would default to position:static which would be fine if it didn't have positioned children, but since I'm positioning its children in relation to it, I need to give it a position type other than static*/
+    /*So I give it position:relative, but I don't use it for offset positioning, but rather just so I can position its children in relation to it*/
+    position:relative;
+    height:10px;/*this is a fixed size, so it won't change no matter what the device or browser window size*/
+    width:100%;/*percent also works here, cause its parent is the <body> which goes full width, so 100% of the body goes full width*/
+    background-color: #999;/*grey*/
+}
+
+.frontDoor {
+    position:absolute;/*I need to position this in the center of the wall parent*/
+    left:50%;
+    transform:translateX(-50%);/*this offset gets the door perfectly centered horizontally*/
+    height:100%;/*this is 100% of its parent!! Since the parent (the wall) is 10px high, this at 100% also becomes 10px*/
+    width:150px;/*a fixed width that will accommodate my walking character*/
+    background-color:#000;/*black*/
+}
+
+#theRestaurant {
+    /*again, this would default to position:static which would be fine, but since I'm positioning its children in relation to it, I need to give it a position type other than static*/
+    /*So I give it position:relative, but I don't use it for offset positioning, but rather just so I can position its children in relation to it*/
+    /*try deactivating this position type and see what happnes to the children elements - the dancers and bar*/
+    position:relative;
+    height:200vh;/*the height is based on the height of the viewport - viewable area of the window*/
+    width:100%;/*percent also works here, cause its parent is the <body> which goes full width, so 100% of the body goes full width*/
+    background-image: url("../images/floor.jpg");/*the floor pattern*/
+    background-size: 20% auto;/*this controls the width and height of the grass tile - try changing it and see what happens*/
+    background-repeat: repeat;/*this repeats the grass tile in both the x and y directions*/
+}
+
+.radialGradient {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgb(0,0,0);
+    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    z-index: 1000;
+    opacity:.7;
+}
+
+#theKitchen {
+    /*defaults to position:static without us having to say - the natural position of this element is good as is*/
+    /*It also has no children being positioned within it, so position:static is fine*/
+    position: relative;
+    height:100vh;/*the height is based on the height of the viewport - viewable area of the window*/
+    width:100%;/*the width is based on the width of the viewport - viewable area of the window*/
+    background-image: url("../images/kitchen-tile.jpg");/*the grass pattern*/
+    background-size: 2% auto;/*this controls the width and height of the grass tile - try changing it and see what happens*/
+    background-repeat: repeat;/*this repeats the grass tile in both the x and y directions*/
+}
+
+#kitchenTableOne {
+    position: absolute;
+    left:50%;
+    transform:translateX(-50%);
+    top:40%;
+    z-index:999;
+}
+
+#chef {
+    position: absolute;
+    left:50%;
+    transform:translateX(-50%);
+    top:50%;
+    z-index:1001;
+    width:90px;
+    height:auto;
+}
+
+#kitchenTableTwo {
+    position: absolute;
+    bottom:0;
+    left:0;
+}
+
+#kitchenLeftCab {
+    position: relative;
+}
+
+#kitchenRightCab {
+    position: absolute;
+    right:0;
+    top:0;
+}
+
+#colorWash {
+    /*I want this to sit on top of everything, so I'm going to remove it from the natural flow, position it, and git it as high z-index*/
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-color: rgb(255,0,255,0);
+    mix-blend-mode: multiply;/*this uses a Photoshop-like blend mode, so we can see the images through the color fill*/
+    z-index:4;/*the highest z-index I have indicated right now, so this is on top*/
+    opacity:0;
+    transition: all 20s;
+
+    /*animation: lightShift 2s infinite;*/
+    
+    pointer-events: none;
+    /*this stack does the same as the one line I have above - just to show you that I used the single line shorthand version*/
+    /*animation-name: lightShift;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;*/
+    
+    /*these are other options I didn't use... refer to w3schools for all your options!!!*/
+    /*animation-delay: 5s;
+    animation-fill-mode: forwards;*/
+}
+
+.lightAnimation {
+    animation: lightShift 3s infinite;
+}
+
+/*the keyframes for the changing light*/
+/*this name "lightShift" needs to exactly match the animation name in the element's styles - above*/
+@keyframes lightShift {
+    0% {
+        background-color: rgb(255,0,255,0);
+    }
+    25% {
+        background-color: rgb(153,0,204,1);
+    }
+    50% {
+        background-color: rgb(0,51,204,1);
+    }
+    75% {
+        background-color: rgb(0,204,51,1);
+    }
+    100% {
+        background-color: rgb(255,255,0,1);
+    }
+}
+
+/*I wanted to remove this from the natural flow inside its parent (the club) and put where I want*/
+#theBar {
+    position:absolute;
+    height:600px;
+    top:50%;
+    transform:translateY(-50%);/*this offset gets the bar perfectly centered vertically*/
+    left:0;/*goes against the left edge*/
+}
+
+.table {
+    position: absolute;
+    width:20%;
+    max-width:250px;
+    height:auto;
+    margin:10rem;
+}
+
+.RightTop {
+    right:0;
+}
+
+.RightBottom {
+    right:0;
+    bottom:0;
+}
+
+.RightMiddleOne {
+    right:0;
+    top:25%;
+    transform: translateY(-50%);
+}
+
+.RightMiddleTwo {
+    right:0;
+    top:55%;
+    transform: translateY(-50%);
+}
+
+.LeftBottom {
+    left:0;
+    bottom:0;
+}
+
+#bartender {
+    position:absolute;
+    width:90px;
+    height:auto;
+    top:50%;
+    transform:translateY(-50%);/*this offset gets the bar perfectly centered vertically*/
+    left:160px;/*goes against the left edge*/
+    z-index:2;
+}
+
+#headChef {
+    position:absolute;
+    width:90px;
+    height:auto;
+    top:50%;
+    transform:translateY(-50%);/*this offset gets the bar perfectly centered vertically*/
+    right:calc(50% - 180px);
+    z-index:2;
+}
+
+#headChef__hidden {
+    position:absolute;
+    width:90px;
+    height:auto;
+    top:50%;
+    transform:translateY(-50%);/*this offset gets the bar perfectly centered vertically*/
+    right:calc(50% - 180px);
+    z-index:2;
+    opacity:0;
+}
+
+#jobTalk__hidden {
+    position: absolute;
+    top:39%;
+    right:calc(50% - 610px);
+    font-size:1.25rem;
+    opacity:0;
+    z-index:1;
+}
+
+.questionText {
+    color:black;
+    background-color: white;
+    padding:1rem;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+#choicesParent {
+    position: absolute;
+    top:40%;
+    left:calc(50% - 200px);
+    opacity:0;
+}
+
+#choicesParent2 {
+    position: absolute;
+    top:30%;
+    left:calc(50% - 200px);
+    opacity:0;
+    z-index:9999;
+}
+
+.choices:hover {
+    background-color: crimson;
+    color:white;
+    cursor: pointer;
+}
+
+#chefTalk {
+    position: absolute;
+    left:60%;
+    top:40%;
+    z-index:9999;
+    font-size:1.25rem;
+    opacity:0;
+}
+
+#jobTalk {
+    position: absolute;
+    top:40%;
+    right:calc(50% - 400px);
+    opacity:0;
+    font-size:1.25rem;
+}
+
+/*dancing character*/
+#carltonDance {
+    position: absolute;
+    height: 225px;
+    width: auto;
+    left:20%;
+    top:10%;
+    animation: carltonFlip 2.5s infinite;
+}
+
+/*the keyframes for Carlton*/
+@keyframes carltonFlip {
+    0% {
+      rotate: 0deg;
+    }
+    80% {
+        rotate: 0deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
+}
+
+/*dancing character*/
+#beanKing {
+    position: absolute;
+    top:80%;
+    left:30%;
+    height: 150px;
+    width: auto;
+    animation: beanCartWheel 2.5s infinite;
+    z-index:2;
+}
+
+/*the keyframes for the dancing bean*/
+@keyframes beanCartWheel {
+    0% {
+        transform: rotate(0deg);
+        left:30%;
+    }
+    20% {
+        transform: rotate(360deg);
+        left:50%;
+    }
+}
+
+/*dancing character*/
+#jakeDog {
+    position: absolute;
+    top:50%;
+    right:25%;
+    height: 125px;
+    width: auto;
+    transform:scale(1);
+    z-index:3;
+}
+
+#jakeDog:hover {
+    cursor: pointer;
+}
+
+.scaleJake {
+    animation: scaleUp 45s forwards;
+}
+
+/*the Jake dog is just an animated GIF without any CSS animation*/
+
+/*until nowwwwwww...*/
+@keyframes scaleUp {
+    0% {
+        transform:scale(1);
+    }
+    100% {
+        transform:scale(50);
+    }
+}
+
+/*the sticky disco ball - I had to put the image in a parent DIV with "sticky" to get it to position the way I wanted*/
+/*this parent defaults to being position:static and full width, and then I position the ball inside of it using top and right*/
+/*top:0 makes it so it sticks to the very top when it reaches that point in the scroll*/
+#innerMonologue {
+    position:sticky;
+    top:0;
+    z-index:9999;/*below the colored light wash, but above the walking character and other dancers*/
+    opacity:0;
+    transition: opacity 1s;
+}
+
+#innerMonologue div {
+    position: absolute;
+    right:0;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    color:black;
+    background-color: yellow;
+    display: inline-block;
+    margin:3rem;
+    padding:1rem;
+}
+
+#discoBallParent:hover {
+    cursor:pointer;
+    /*opacity:.5;*/
+    filter: hue-rotate(180deg);
+    mix-blend-mode: color-dodge;
+}
+
+/*positioned at the top and to the right inside its full width parent*/
+#discoBall {
+    position:absolute;
+    top:0;
+    right:10%;
+    width:100px;
+    height:auto;
+}
+
+#mainVideo {
+    position: fixed;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left:-100%;
+    z-index:99999999;
+    opacity:0;
+    transition: opacity 2s;
+}
+
+
+
+
+
+
