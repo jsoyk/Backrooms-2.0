@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('CormorantGaramond-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@import url("https://typekit.net");
+
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #05060a;
+  --text: #e9e6df;
+  --tracking: 0.22em;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+}
+
